@@ -13,10 +13,9 @@ import { PlanCard } from './components/PlanCard';
 import { SummaryCards } from './components/SummaryCards';
 import { CombinationTable } from './components/CombinationTable';
 import { StintTimelineModal } from './components/StintTimelineModal';
-import { Car, Lightning, Compass } from '@phosphor-icons/react';
 
 export function App() {
-  const [plans, setPlans] = useLocalStorage<PlanConfig[]>('stratoracer_plans_v1', DEFAULT_PLANS);
+  const [plans, setPlans] = useLocalStorage<PlanConfig[]>('stratoracer_plans_v2', DEFAULT_PLANS);
   const [globalSettings, setGlobalSettings] = useLocalStorage<GlobalSettings>(
     'stratoracer_settings_v1',
     DEFAULT_GLOBAL_SETTINGS
@@ -65,7 +64,7 @@ export function App() {
 
   // Reset all to original factory defaults
   const handleResetToDefaults = () => {
-    if (window.confirm('Reset semua input strategi ke pengaturan awal?')) {
+    if (window.confirm('Kembalikan seluruh parameter balapan dan paket stint ke konfigurasi awal pit wall?')) {
       setPlans(DEFAULT_PLANS);
       setGlobalSettings(DEFAULT_GLOBAL_SETTINGS);
       setActivePresetName('8 Hours Endurance');
@@ -75,11 +74,7 @@ export function App() {
   return (
     <div className="min-h-screen bg-[#080b0f] text-slate-100 flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200">
       {/* Top Telemetry Header */}
-      <Header
-        onSelectPreset={handleSelectPreset}
-        onResetToDefaults={handleResetToDefaults}
-        activePresetName={activePresetName}
-      />
+      <Header />
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-7">
@@ -87,6 +82,9 @@ export function App() {
         <section>
           <GlobalSettingsCard
             settings={globalSettings}
+            activePresetName={activePresetName}
+            onSelectPreset={handleSelectPreset}
+            onResetToDefaults={handleResetToDefaults}
             onChange={(s) => {
               setGlobalSettings(s);
               setActivePresetName(undefined);
@@ -98,23 +96,22 @@ export function App() {
         <section className="space-y-3">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
-              <h2 className="text-base font-bold text-white tracking-tight flex items-center gap-2">
-                <Car size={18} className="text-cyan-400" />
-                Stint Strategy Plans (Plan A – F)
+              <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                Konfigurasi Paket Stint (Plan A – F)
               </h2>
-              <p className="text-xs text-slate-400">
-                Aktifkan stint yang ingin dibandingkan. Mode Fuel-based menghitung durasi dari tangki; Mode Time-based menghitung kebutuhan liter.
+              <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
+                Aktifkan profil stint yang ingin disimulasikan. Mode Fuel-based mengalkulasi durasi stint dari kapasitas tangki, sedangkan Mode Time-based menghitung kebutuhan bahan bakar untuk durasi target.
               </p>
             </div>
-            <div className="text-xs font-mono text-slate-400 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <div className="text-xs sm:text-sm font-mono text-slate-400 flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
               <span>
-                {plans.filter((p) => p.enabled).length} dari {plans.length} plan aktif
+                {plans.filter((p) => p.enabled).length} dari {plans.length} Plan Aktif
               </span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
             {plans.map((plan, idx) => (
               <PlanCard
                 key={plan.id}
@@ -129,9 +126,8 @@ export function App() {
         {/* Section 3: Summary Insight Metrics */}
         <section className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-base font-bold text-white tracking-tight flex items-center gap-2">
-              <Lightning size={18} className="text-amber-400" weight="fill" />
-              Telemetry Insights & Summary
+            <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+              Ringkasan Telemetri & Strategi Terbaik
             </h2>
           </div>
 
@@ -161,14 +157,11 @@ export function App() {
       {/* Footer */}
       <footer className="border-t border-race-border bg-[#07090d] px-4 sm:px-6 py-5 text-xs font-mono text-slate-400">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-          <div className="flex items-center gap-2">
-            <Compass size={16} className="text-cyan-400" />
-            <span>
-              StratoRacer v1.0 • Client-side Zero Lag Calculation Engine
-            </span>
+          <div>
+            StratoRacer v1.0 • High-Precision Endurance Pit Wall Engine
           </div>
           <div className="text-slate-400">
-            Endurance Racing Strategy Planner • Auto-saved to Browser Storage
+            Dikembangkan untuk Sim Racer & Tim Balap Ketahanan • Dikelola oleh Xenpul & Mikeyno24
           </div>
         </div>
       </footer>

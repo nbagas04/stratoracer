@@ -12,7 +12,7 @@ export const DEFAULT_GLOBAL_SETTINGS: GlobalSettings = {
 export const DEFAULT_PLANS: PlanConfig[] = [
   {
     id: 'A',
-    label: 'Driver 1 (Push Stint)',
+    label: 'Plan A (Full Attack / Maximum Pace)',
     enabled: true,
     mode: 'Fuel-based',
     paceStr: '1:30',
@@ -22,7 +22,7 @@ export const DEFAULT_PLANS: PlanConfig[] = [
   },
   {
     id: 'B',
-    label: 'Driver 2 (Fuel Save)',
+    label: 'Plan B (Balanced / Standard Pace)',
     enabled: true,
     mode: 'Fuel-based',
     paceStr: '1:32.5',
@@ -32,7 +32,7 @@ export const DEFAULT_PLANS: PlanConfig[] = [
   },
   {
     id: 'C',
-    label: 'Plan C (Time Fixed)',
+    label: 'Plan C (Fuel Save / Lift & Coast)',
     enabled: false,
     mode: 'Time-based',
     paceStr: '1:30',
@@ -42,7 +42,7 @@ export const DEFAULT_PLANS: PlanConfig[] = [
   },
   {
     id: 'D',
-    label: 'Plan D (Rain/Wet)',
+    label: 'Plan D (Heavy Traffic / Wet Setup)',
     enabled: false,
     mode: 'Fuel-based',
     paceStr: '1:42',
@@ -52,7 +52,7 @@ export const DEFAULT_PLANS: PlanConfig[] = [
   },
   {
     id: 'E',
-    label: 'Plan E',
+    label: 'Plan E (Sprint Stint / Soft Tyre)',
     enabled: false,
     mode: 'Fuel-based',
     paceStr: '1:30',
@@ -62,7 +62,7 @@ export const DEFAULT_PLANS: PlanConfig[] = [
   },
   {
     id: 'F',
-    label: 'Plan F',
+    label: 'Plan F (Endurance Long Run)',
     enabled: false,
     mode: 'Fuel-based',
     paceStr: '1:30',
@@ -85,6 +85,26 @@ export interface PresetScenario {
 
 export const PRESET_SCENARIOS: PresetScenario[] = [
   {
+    name: '4 Hours Sprint Enduro',
+    badge: '4H Sprint',
+    targetMinutes: 240,
+    allowance: 5,
+    normalPitSec: 48,
+    longPitSec: 180,
+    longPitCount: 2,
+    maxReps: 6,
+  },
+  {
+    name: '6 Hours Endurance',
+    badge: '6H Enduro',
+    targetMinutes: 360,
+    allowance: 5,
+    normalPitSec: 50,
+    longPitSec: 200,
+    longPitCount: 2,
+    maxReps: 7,
+  },
+  {
     name: '8 Hours Endurance',
     badge: '8H Standard',
     targetMinutes: 480,
@@ -96,7 +116,7 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
   },
   {
     name: '12 Hours Sebring / Bathurst',
-    badge: '12H Classic',
+    badge: '12H Enduro',
     targetMinutes: 720,
     allowance: 4,
     normalPitSec: 55,
@@ -113,15 +133,5 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
     longPitSec: 300,
     longPitCount: 6,
     maxReps: 18,
-  },
-  {
-    name: '4 Hours Sprint Enduro',
-    badge: '4H Sprint',
-    targetMinutes: 240,
-    allowance: 5,
-    normalPitSec: 48,
-    longPitSec: 180,
-    longPitCount: 2,
-    maxReps: 6,
   },
 ];

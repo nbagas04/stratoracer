@@ -8,23 +8,23 @@ export function exportCombinationsToCsv(
   if (combinations.length === 0) return;
 
   const headers = [
-    'Strategy ID',
-    'Plan A',
-    'Plan B',
-    'Plan C',
-    'Plan D',
-    'Plan E',
-    'Plan F',
+    'Strategy Rank',
+    'Plan A Stints',
+    'Plan B Stints',
+    'Plan C Stints',
+    'Plan D Stints',
+    'Plan E Stints',
+    'Plan F Stints',
     'Total Stints',
-    'Normal Pits',
-    'Long Pits',
-    'Total Pits',
-    'Race Time (Formatted)',
-    'Total Time (Minutes)',
+    'Normal Pits (Refuel)',
+    'Long Pits (Service)',
+    'Total Pit Stops',
+    'Total Race Duration (Formatted)',
+    'Total Race Duration (Minutes)',
     'Delta to Target (Minutes)',
     'Delta (%)',
-    'Estimated Total Laps',
-    'Estimated Total Fuel (L)',
+    'Projected Total Laps',
+    'Projected Total Fuel (L)',
   ];
 
   const rows = combinations.map((c, index) => [

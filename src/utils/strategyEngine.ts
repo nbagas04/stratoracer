@@ -20,7 +20,7 @@ export function calculatePlanMetrics(config: PlanConfig): CalculatedPlanInfo {
     return {
       id: config.id,
       isValid: false,
-      errorMessage: 'Plan is disabled',
+      errorMessage: 'Paket stint sedang dinonaktifkan',
       parsedPaceSeconds: paceSeconds || 0,
       parsedFuelPerLap: fuelPerLap,
       parsedTankCapacity: tankCapacity,
@@ -35,7 +35,7 @@ export function calculatePlanMetrics(config: PlanConfig): CalculatedPlanInfo {
     return {
       id: config.id,
       isValid: false,
-      errorMessage: 'Pace format invalid (e.g. 90 or 1:30)',
+      errorMessage: 'Format pace tidak valid (contoh: 90 atau 1:30.5)',
       parsedPaceSeconds: 0,
       parsedFuelPerLap: fuelPerLap,
       parsedTankCapacity: tankCapacity,
@@ -50,7 +50,7 @@ export function calculatePlanMetrics(config: PlanConfig): CalculatedPlanInfo {
     return {
       id: config.id,
       isValid: false,
-      errorMessage: 'Fuel/lap must be greater than 0',
+      errorMessage: 'Konsumsi fuel per lap harus lebih dari 0',
       parsedPaceSeconds: paceSeconds,
       parsedFuelPerLap: fuelPerLap,
       parsedTankCapacity: tankCapacity,
@@ -66,7 +66,7 @@ export function calculatePlanMetrics(config: PlanConfig): CalculatedPlanInfo {
       return {
         id: config.id,
         isValid: false,
-        errorMessage: 'Tank capacity must be > 0',
+        errorMessage: 'Kapasitas tangki harus lebih dari 0 liter',
         parsedPaceSeconds: paceSeconds,
         parsedFuelPerLap: fuelPerLap,
         parsedTankCapacity: tankCapacity,
@@ -98,7 +98,7 @@ export function calculatePlanMetrics(config: PlanConfig): CalculatedPlanInfo {
       return {
         id: config.id,
         isValid: false,
-        errorMessage: 'Duration must be > 0 min',
+        errorMessage: 'Target durasi stint harus lebih dari 0 menit',
         parsedPaceSeconds: paceSeconds,
         parsedFuelPerLap: fuelPerLap,
         parsedTankCapacity: tankCapacity,

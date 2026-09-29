@@ -5,9 +5,7 @@ import {
   Funnel,
   CaretUp,
   CaretDown,
-  Clock,
   Eye,
-  Rows,
 } from '@phosphor-icons/react';
 import { StrategyCombination, PlanConfig } from '../types/strategy';
 import { formatRaceTime, formatDeltaTime } from '../utils/formatters';
@@ -119,16 +117,15 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
       <div className="p-4 sm:p-5 border-b border-race-border/80 bg-[#090d14]/70 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h3 className="text-base font-bold text-white tracking-tight flex items-center gap-2">
-              <Rows size={18} className="text-cyan-400" />
-              Tabel Kombinasi Strategi
+            <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+              Matriks Kombinasi Strategi Pit Wall
             </h3>
-            <span className="px-2 py-0.5 text-xs font-mono rounded bg-slate-800 text-slate-300">
-              {filteredData.length} dari {combinations.length} opsi
+            <span className="px-2.5 py-0.5 text-xs font-mono font-bold rounded bg-slate-800 text-slate-300">
+              {filteredData.length} dari {combinations.length} skenario
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-0.5">
-            Klik baris mana saja untuk melihat visualisasi alur timeline stint & pit stop
+          <p className="text-xs sm:text-sm text-slate-400 mt-1">
+            Pilih salah satu skenario untuk membedah urutan stint, pit window, dan kalkulasi race clock
           </p>
         </div>
 
@@ -147,8 +144,8 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
-              placeholder="Cari strategi / pit..."
-              className="bg-[#0c1018] border border-race-border focus:border-cyan-500 rounded-xl pl-8 pr-3 py-1.5 text-xs font-mono text-white placeholder-slate-500 w-44 sm:w-52 transition-colors outline-none"
+              placeholder="Cari skenario, jumlah pit, durasi..."
+              className="bg-[#0c1018] border border-race-border focus:border-cyan-500 rounded-xl pl-8 pr-3 py-1.5 text-xs font-mono text-white placeholder-slate-500 w-44 sm:w-56 transition-colors outline-none"
             />
           </div>
 
@@ -163,7 +160,7 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
               }}
               className="bg-transparent text-xs text-slate-200 outline-none cursor-pointer pr-1 font-mono"
             >
-              <option value="all" className="bg-slate-900">Semua Plan</option>
+              <option value="all" className="bg-slate-900">Semua Paket Stint</option>
               {enabledPlans.map((p) => (
                 <option key={p.id} value={p.id} className="bg-slate-900">
                   Hanya Plan {p.id} ({p.label})
@@ -177,10 +174,10 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
             onClick={handleExport}
             disabled={sortedData.length === 0}
             className="px-3.5 py-1.5 text-xs font-medium rounded-xl bg-cyan-500/15 text-cyan-300 hover:bg-cyan-500/25 border border-cyan-500/30 flex items-center gap-1.5 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-            title="Download CSV file of current strategy table"
+            title="Unduh tabel strategi balapan dalam format CSV"
           >
             <DownloadSimple size={14} weight="bold" />
-            <span>Export CSV</span>
+            <span>Ekspor CSV</span>
           </button>
         </div>
       </div>
@@ -189,16 +186,16 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
       <div className="overflow-x-auto">
         <table className="w-full text-left text-xs border-collapse">
           <thead>
-            <tr className="border-b border-race-border/80 bg-[#080b10] text-slate-400 font-mono uppercase tracking-wider text-[11px]">
+            <tr className="border-b border-race-border/80 bg-[#080b10] text-slate-300 font-mono uppercase tracking-wider text-xs font-bold">
               <th className="py-3 px-3.5 w-12 text-center">#</th>
-              <th className="py-3 px-3.5 min-w-[200px]">Stint Breakdown</th>
-              <th className="py-3 px-3 w-16 text-center">Stints</th>
+              <th className="py-3 px-3.5 min-w-[200px]">Komposisi Stint</th>
+              <th className="py-3 px-3 w-16 text-center">Total Stint</th>
               <th
                 onClick={() => handleSort('totalPits')}
                 className="py-3 px-3 text-center cursor-pointer hover:text-white transition-colors"
               >
                 <div className="flex items-center justify-center gap-1">
-                  <span>Pits</span>
+                  <span>Pit Stop</span>
                   {sortField === 'totalPits' && (
                     sortOrder === 'asc' ? <CaretUp size={12} /> : <CaretDown size={12} />
                   )}
@@ -209,7 +206,7 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
                 className="py-3 px-3.5 cursor-pointer hover:text-white transition-colors"
               >
                 <div className="flex items-center gap-1">
-                  <span>Race Duration</span>
+                  <span>Total Waktu Balapan</span>
                   {sortField === 'totalTime' && (
                     sortOrder === 'asc' ? <CaretUp size={12} /> : <CaretDown size={12} />
                   )}
@@ -220,7 +217,7 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
                 className="py-3 px-3.5 cursor-pointer hover:text-white transition-colors"
               >
                 <div className="flex items-center gap-1">
-                  <span>Delta to Target</span>
+                  <span>Delta vs Target</span>
                   {sortField === 'delta' && (
                     sortOrder === 'asc' ? <CaretUp size={12} /> : <CaretDown size={12} />
                   )}
@@ -231,7 +228,7 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
                 className="py-3 px-3 text-right cursor-pointer hover:text-white transition-colors"
               >
                 <div className="flex items-center justify-end gap-1">
-                  <span>Est. Laps</span>
+                  <span>Est. Total Lap</span>
                   {sortField === 'totalLaps' && (
                     sortOrder === 'asc' ? <CaretUp size={12} /> : <CaretDown size={12} />
                   )}
@@ -242,13 +239,13 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
                 className="py-3 px-3.5 text-right cursor-pointer hover:text-white transition-colors"
               >
                 <div className="flex items-center justify-end gap-1">
-                  <span>Est. Fuel</span>
+                  <span>Est. Total Fuel</span>
                   {sortField === 'totalFuel' && (
                     sortOrder === 'asc' ? <CaretUp size={12} /> : <CaretDown size={12} />
                   )}
                 </div>
               </th>
-              <th className="py-3 px-3 w-16 text-center">Action</th>
+              <th className="py-3 px-3 w-16 text-center">Detail</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-race-border/40 font-mono">
@@ -304,14 +301,13 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
                     <td className="py-3 px-3 text-center">
                       <div className="font-bold text-cyan-300">{item.totalPits}</div>
                       <div className="text-[10px] text-slate-400">
-                        {item.longPits}L / {item.normalPits}N
+                        {item.normalPits} Reg / {item.longPits} Servis
                       </div>
                     </td>
 
                     {/* Total Duration */}
                     <td className="py-3 px-3.5">
-                      <div className="font-bold text-white flex items-center gap-1.5">
-                        <Clock size={13} className="text-cyan-400" />
+                      <div className="font-bold text-white">
                         {formatRaceTime(item.totalTimeMinutes)}
                       </div>
                       <div className="text-[10px] text-slate-400">
@@ -344,7 +340,7 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
                           onSelectCombination(item);
                         }}
                         className="p-1.5 rounded-lg text-slate-400 hover:text-cyan-300 hover:bg-cyan-500/10 transition-colors"
-                        title="Lihat Urutan Stint"
+                        title="Buka Alur Timeline Stint"
                       >
                         <Eye size={16} />
                       </button>
@@ -355,7 +351,7 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
             ) : (
               <tr>
                 <td colSpan={9} className="py-8 text-center text-slate-400 text-xs font-mono">
-                  Tidak ada data kombinasi yang sesuai dengan kriteria filter.
+                  Tidak ditemukan kombinasi strategi yang cocok dengan kriteria filter atau pencarian.
                 </td>
               </tr>
             )}
@@ -366,7 +362,7 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
       {/* Pagination Footer */}
       <div className="p-3.5 sm:p-4 border-t border-race-border/80 bg-[#090d14]/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
         <div className="flex items-center gap-2 text-slate-400">
-          <span>Menampilkan:</span>
+          <span>Tampilkan:</span>
           <select
             value={pageSize}
             onChange={(e) => {
@@ -375,13 +371,13 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
             }}
             className="bg-[#0c1018] border border-race-border text-slate-200 rounded px-2 py-1 outline-none cursor-pointer"
           >
-            <option value={10}>10 baris</option>
-            <option value={25}>25 baris</option>
-            <option value={50}>50 baris</option>
-            <option value={100}>100 baris</option>
+            <option value={10}>10 per halaman</option>
+            <option value={25}>25 per halaman</option>
+            <option value={50}>50 per halaman</option>
+            <option value={100}>100 per halaman</option>
           </select>
           <span>
-            Halaman {currentPage} dari {totalPages} ({sortedData.length} item)
+            Halaman {currentPage} dari {totalPages} ({sortedData.length} skenario)
           </span>
         </div>
 

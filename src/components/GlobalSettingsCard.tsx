@@ -40,17 +40,17 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
       {/* Card Header */}
       <div className="pb-4 mb-4 border-b border-race-border/60">
         <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-          Parameter Strategi Balapan
+          Global Race Parameters
         </h2>
         <p className="text-xs sm:text-sm text-slate-400 mt-1">
-          Konfigurasi target durasi lomba, batas toleransi waktu (allowance), dan regulasi pit stop
+          Konfigurasi target durasi lomba, jendela toleransi waktu (allowance), dan regulasi pit stop
         </p>
       </div>
 
       {/* Quick Race Presets */}
       <div className="mb-6 space-y-2">
         <div className="text-xs sm:text-sm font-bold text-slate-200">
-          Preset Skenario Balapan
+          Race Presets
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
@@ -66,7 +66,7 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
                     ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/60 shadow-[0_0_12px_rgba(6,182,212,0.25)] font-semibold'
                     : 'text-slate-400 hover:text-slate-200 bg-[#0d131c] hover:bg-slate-800/80 border border-race-border/80'
                 }`}
-                title={`${preset.name} (${preset.targetMinutes} menit)`}
+                title={`${preset.name} (${preset.targetMinutes}m)`}
               >
                 <span>{preset.badge}</span>
               </button>
@@ -80,7 +80,7 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
             title="Kembalikan semua parameter ke nilai default"
           >
             <ArrowCounterClockwise size={12} />
-            <span>Reset Default</span>
+            <span>Reset Defaults</span>
           </button>
         </div>
       </div>
@@ -90,14 +90,14 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
         {/* Column 1: Race Timing & Tolerance */}
         <div className="space-y-4">
           <div className="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-300 pb-1.5 border-b border-race-border/40">
-            Target Waktu & Toleransi
+            Race Timing & Tolerance
           </div>
 
           {/* 1. Target Race Duration */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
               <label className="text-xs sm:text-sm font-semibold text-slate-200">
-                Target Durasi Balapan
+                Target Race Duration
               </label>
               <span className="font-mono text-slate-400 text-xs sm:text-sm">
                 {formatRaceTime(settings.targetTotalTimeMinutes)}
@@ -114,12 +114,12 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
               />
               <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
                 <span className="text-xs sm:text-sm font-mono text-slate-400">
-                  menit
+                  min
                 </span>
               </div>
             </div>
             <p className="text-[11px] text-slate-400">
-              Total durasi lomba yang dituju (contoh: 240m = 4 jam, 480m = 8 jam, 1440m = 24 jam)
+              Total durasi balapan yang dituju (contoh: 240m = 4 jam, 480m = 8 jam, 1440m = 24 jam)
             </p>
           </div>
 
@@ -127,7 +127,7 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
               <label className="text-xs sm:text-sm font-semibold text-slate-200">
-                Jendela Toleransi Waktu (± %)
+                Allowance Window (± %)
               </label>
               <span className="font-mono text-slate-400 text-xs sm:text-sm">
                 ±{(settings.targetTotalTimeMinutes * (settings.allowancePercent / 100)).toFixed(1)}m margin
@@ -151,21 +151,21 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
               </div>
               {/* Valid Duration without background */}
               <div className="text-xs font-mono text-slate-400 shrink-0 flex items-center justify-center gap-1.5 py-1">
-                <span>Rentang Target:</span>
+                <span>Valid Range:</span>
                 <span className="text-slate-300">{formatRaceTime(minTime)}</span>
                 <span className="text-slate-500">➔</span>
                 <span className="text-slate-300">{formatRaceTime(maxTime)}</span>
               </div>
             </div>
             <p className="text-[11px] text-slate-400">
-              Batas toleransi deviasi total waktu finish terhadap target lomba (±{(settings.targetTotalTimeMinutes * (settings.allowancePercent / 100)).toFixed(1)} menit)
+              Batas toleransi deviasi total waktu finish terhadap target durasi (±{(settings.targetTotalTimeMinutes * (settings.allowancePercent / 100)).toFixed(1)} menit)
             </p>
           </div>
 
           {/* 3. Max Repetitions (Max Reps) */}
           <div className="space-y-1.5">
             <label className="text-xs sm:text-sm font-semibold text-slate-200 block">
-              Maks. Repetisi Stint per Plan
+              Max Repetitions per Plan
             </label>
             <div className="relative">
               <input
@@ -178,7 +178,7 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
               />
               <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
                 <span className="text-xs sm:text-sm font-mono text-slate-400">
-                  stint
+                  stints
                 </span>
               </div>
             </div>
@@ -191,14 +191,14 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
         {/* Column 2: Pit Lane Rules */}
         <div className="space-y-4">
           <div className="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-300 pb-1.5 border-b border-race-border/40">
-            Regulasi & Durasi Pit Stop
+            Pit Lane Regulations
           </div>
 
           {/* 4. Normal Pit Duration */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
               <label className="text-xs sm:text-sm font-semibold text-slate-200">
-                Durasi Pit Stop Reguler (Refuel)
+                Normal Pit Duration
               </label>
               <span className="font-mono text-slate-400 text-xs sm:text-sm">
                 {(settings.normalPitDurationSeconds / 60).toFixed(2)}m
@@ -215,7 +215,7 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
               />
               <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
                 <span className="text-xs sm:text-sm font-mono text-slate-400">
-                  detik
+                  sec
                 </span>
               </div>
             </div>
@@ -228,7 +228,7 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
               <label className="text-xs sm:text-sm font-semibold text-slate-200">
-                Durasi Pit Stop Servis Panjang
+                Long Pit Duration
               </label>
               <span className="font-mono text-slate-400 text-xs sm:text-sm">
                 {(settings.longPitDurationSeconds / 60).toFixed(2)}m
@@ -245,7 +245,7 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
               />
               <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
                 <span className="text-xs sm:text-sm font-mono text-slate-400">
-                  detik
+                  sec
                 </span>
               </div>
             </div>
@@ -257,7 +257,7 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
           {/* 6. Long Pit Count */}
           <div className="space-y-1.5">
             <label className="text-xs sm:text-sm font-semibold text-slate-200 block">
-              Jumlah Pit Stop Servis Panjang
+              Long Pit Count
             </label>
             <div className="relative">
               <input
@@ -270,7 +270,7 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
               />
               <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
                 <span className="text-xs sm:text-sm font-mono text-slate-400">
-                  pit stop
+                  stops
                 </span>
               </div>
             </div>

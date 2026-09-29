@@ -27,14 +27,14 @@ export const SummaryCards: React.FC<SummaryCardsProps> = ({
       {/* 1. Combinations Counter */}
       <div className="bg-race-panel border border-race-border rounded-2xl p-5 shadow-md flex flex-col justify-between min-w-0">
         <div>
-          <h3 className="text-sm sm:text-base font-bold text-slate-300">Kombinasi Strategi Valid</h3>
+          <h3 className="text-sm sm:text-base font-bold text-slate-300">Valid Combinations</h3>
         </div>
         <div className="mt-3">
           <div className="flex items-baseline gap-2">
             <span className="text-2xl sm:text-3xl font-mono font-bold text-white">
               {combinations.length}
             </span>
-            <span className="text-xs sm:text-sm text-slate-400 font-mono">skenario terverifikasi</span>
+            <span className="text-xs sm:text-sm text-slate-400 font-mono">verified strategies</span>
           </div>
           <p className="text-xs text-slate-400 mt-1.5 font-mono truncate" title={`${prunedBranchesCount.toLocaleString()} variasi di luar parameter disaring`}>
             {prunedBranchesCount.toLocaleString()} variasi di luar parameter disaring
@@ -46,7 +46,7 @@ export const SummaryCards: React.FC<SummaryCardsProps> = ({
       <div className="bg-gradient-to-br from-cyan-950/30 via-race-panel to-race-panel border border-cyan-500/30 rounded-2xl p-5 shadow-md flex flex-col justify-between relative overflow-hidden group min-w-0">
         <div>
           <h3 className="text-sm sm:text-base font-bold text-cyan-300">
-            Strategi Paling Optimal
+            Optimal Strategy
           </h3>
         </div>
         <div className="mt-2 min-w-0">
@@ -64,13 +64,13 @@ export const SummaryCards: React.FC<SummaryCardsProps> = ({
                 </span>
               </div>
               <div className="flex items-center justify-between gap-1 text-xs text-slate-400 pt-0.5">
-                <span className="truncate">{best.totalPits} Pit Stop ({best.normalPits} Reguler + {best.longPits} Panjang)</span>
+                <span className="truncate">{best.totalPits} Pit Stops ({best.normalPits} Norm + {best.longPits} Long)</span>
                 {onSelectRecommendation && (
                   <button
                     onClick={onSelectRecommendation}
                     className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2 shrink-0 font-medium cursor-pointer"
                   >
-                    Buka Timeline →
+                    Open Timeline →
                   </button>
                 )}
               </div>
@@ -86,14 +86,14 @@ export const SummaryCards: React.FC<SummaryCardsProps> = ({
       {/* 3. Target Race Duration & Tolerance */}
       <div className="bg-race-panel border border-race-border rounded-2xl p-5 shadow-md flex flex-col justify-between min-w-0">
         <div>
-          <h3 className="text-sm sm:text-base font-bold text-slate-300">Target Balapan & Toleransi</h3>
+          <h3 className="text-sm sm:text-base font-bold text-slate-300">Target & Tolerance Window</h3>
         </div>
         <div className="mt-3">
           <div className="text-xl sm:text-2xl font-mono font-bold text-white">
             {formatRaceTime(settings.targetTotalTimeMinutes)}
           </div>
           <div className="text-xs sm:text-sm font-mono text-slate-400 mt-1.5 flex flex-wrap items-center justify-between gap-1">
-            <span className="text-slate-400">Jendela Target (±{settings.allowancePercent}%):</span>
+            <span className="text-slate-400">Window (±{settings.allowancePercent}%):</span>
             <span className="text-cyan-300 font-semibold">
               {formatRaceTime(minTime, false)} – {formatRaceTime(maxTime, false)}
             </span>
@@ -104,17 +104,17 @@ export const SummaryCards: React.FC<SummaryCardsProps> = ({
       {/* 4. Best Strategy Laps & Fuel */}
       <div className="bg-race-panel border border-race-border rounded-2xl p-5 shadow-md flex flex-col justify-between min-w-0">
         <div>
-          <h3 className="text-sm sm:text-base font-bold text-slate-300">Proyeksi Lap & Konsumsi Fuel</h3>
+          <h3 className="text-sm sm:text-base font-bold text-slate-300">Projected Laps & Fuel</h3>
         </div>
         <div className="mt-3">
           {best ? (
             <div>
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <span className="text-xl sm:text-2xl font-mono font-bold text-emerald-400">
-                  {best.totalLaps.toFixed(1)} <span className="text-xs sm:text-sm font-normal text-slate-400">Lap</span>
+                  {best.totalLaps.toFixed(1)} <span className="text-xs sm:text-sm font-normal text-slate-400">Laps</span>
                 </span>
                 <span className="text-sm sm:text-base font-mono text-cyan-300 font-bold">
-                  {best.totalFuelLiters.toFixed(0)} <span className="text-xs text-slate-400 font-normal">Liter</span>
+                  {best.totalFuelLiters.toFixed(0)} <span className="text-xs text-slate-400 font-normal">Liters</span>
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-1.5 truncate">

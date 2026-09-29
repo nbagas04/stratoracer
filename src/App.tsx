@@ -97,16 +97,16 @@ export function App() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-                Konfigurasi Paket Stint (Plan A – F)
+                Stint Strategy Matrix (Plan A – F)
               </h2>
               <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
-                Aktifkan profil stint yang ingin disimulasikan. Mode Fuel-based mengalkulasi durasi stint dari kapasitas tangki, sedangkan Mode Time-based menghitung kebutuhan bahan bakar untuk durasi target.
+                Pilih dan sesuaikan profil stint yang ingin disimulasikan. Mode Fuel-based mengalkulasi batas stint dari kapasitas tangki, sedangkan Mode Time-based menghitung kebutuhan bahan bakar untuk durasi target.
               </p>
             </div>
             <div className="text-xs sm:text-sm font-mono text-slate-400 flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
               <span>
-                {plans.filter((p) => p.enabled).length} dari {plans.length} Plan Aktif
+                {plans.filter((p) => p.enabled).length} of {plans.length} Plans Active
               </span>
             </div>
           </div>
@@ -127,7 +127,7 @@ export function App() {
         <section className="space-y-3">
           <div className="flex items-center justify-between">
             <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-              Ringkasan Telemetri & Strategi Terbaik
+              Telemetry Insights & Optimal Strategy
             </h2>
           </div>
 

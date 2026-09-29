@@ -128,7 +128,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({
         <div className="space-y-1">
           <div className="flex items-center justify-between text-xs sm:text-sm">
             <label className="font-semibold text-slate-200">
-              Target Lap Time / Pace <span className="text-slate-400 text-[10px] sm:text-xs font-normal">(detik atau mm:ss)</span>
+              Target Lap Time / Pace <span className="text-slate-400 text-[10px] sm:text-xs font-normal">(sec or mm:ss)</span>
             </label>
             {calculated.parsedPaceSeconds > 0 && (
               <span className="font-mono text-cyan-400 text-xs font-semibold">
@@ -141,7 +141,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({
             disabled={!plan.enabled}
             value={plan.paceStr}
             onChange={(e) => handleUpdate({ paceStr: e.target.value })}
-            placeholder="Contoh: 1:30.5 atau 90.5"
+            placeholder="e.g. 1:30.5 or 90.5"
             className="w-full bg-[#0a0e16] border border-race-border focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/40 rounded-xl px-3 py-2 text-xs sm:text-sm font-mono text-white placeholder-slate-600 disabled:opacity-50 transition-colors"
           />
         </div>
@@ -149,7 +149,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({
         {/* Fuel Per Lap */}
         <div className="space-y-1">
           <label className="text-xs sm:text-sm font-semibold text-slate-200 block">
-            Konsumsi Bahan Bakar <span className="text-slate-400 text-[10px] sm:text-xs font-normal">(Liter / lap)</span>
+            Fuel Consumption <span className="text-slate-400 text-[10px] sm:text-xs font-normal">(Liters / lap)</span>
           </label>
           <input
             type="text"
@@ -157,7 +157,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({
             disabled={!plan.enabled}
             value={plan.fuelPerLapStr}
             onChange={(e) => handleUpdate({ fuelPerLapStr: e.target.value })}
-            placeholder="Contoh: 2.35"
+            placeholder="e.g. 2.35"
             className="w-full bg-[#0a0e16] border border-race-border focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/40 rounded-xl px-3 py-2 text-xs sm:text-sm font-mono text-white placeholder-slate-600 disabled:opacity-50 transition-colors"
           />
         </div>
@@ -165,7 +165,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({
         {/* Tank Capacity */}
         <div className="space-y-1">
           <label className="text-xs sm:text-sm font-semibold text-slate-200 block">
-            Kapasitas Tangki <span className="text-slate-400 text-[10px] sm:text-xs font-normal">(Liter)</span>
+            Tank Capacity <span className="text-slate-400 text-[10px] sm:text-xs font-normal">(Liters)</span>
           </label>
           <input
             type="text"
@@ -173,7 +173,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({
             disabled={!plan.enabled}
             value={plan.tankCapacityStr}
             onChange={(e) => handleUpdate({ tankCapacityStr: e.target.value })}
-            placeholder="Contoh: 100"
+            placeholder="e.g. 100"
             className="w-full bg-[#0a0e16] border border-race-border focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/40 rounded-xl px-3 py-2 text-xs sm:text-sm font-mono text-white placeholder-slate-600 disabled:opacity-50 transition-colors"
           />
         </div>
@@ -183,7 +183,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({
           <div className="space-y-1 p-2.5 rounded-xl bg-amber-500/5 border border-amber-500/20 animate-fadeIn">
             <div className="flex items-center justify-between text-xs sm:text-sm">
               <label className="font-semibold text-amber-200">
-                Target Durasi Stint <span className="text-amber-400/80 text-[10px] sm:text-xs font-normal">(menit)</span>
+                Target Stint Duration <span className="text-amber-400/80 text-[10px] sm:text-xs font-normal">(minutes)</span>
               </label>
             </div>
             <input
@@ -192,7 +192,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({
               disabled={!plan.enabled}
               value={plan.durationStr}
               onChange={(e) => handleUpdate({ durationStr: e.target.value })}
-              placeholder="Contoh: 60"
+              placeholder="e.g. 60"
               className="w-full bg-[#0a0e16] border border-amber-500/40 focus:border-amber-400 focus:ring-1 focus:ring-amber-500/40 rounded-lg px-3 py-2 text-xs sm:text-sm font-mono text-amber-200 placeholder-slate-600 disabled:opacity-50 transition-colors"
             />
           </div>
@@ -203,7 +203,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({
           <div className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/40 text-rose-300 text-xs flex items-start gap-2">
             <WarningCircle size={16} className="text-rose-400 shrink-0 mt-0.5" weight="fill" />
             <div>
-              <p className="font-semibold">Peringatan: Kebutuhan Bahan Bakar Melebihi Tangki!</p>
+              <p className="font-semibold">Fuel Overflow Warning!</p>
               <p className="text-[11px] text-rose-400/90 mt-0.5">
                 Stint ini memerlukan <strong>{calculated.fuelNeededPerStint.toFixed(1)}L</strong>, melebihi kapasitas tangki (<strong>{calculated.parsedTankCapacity}L</strong>). Mobil berisiko kehabisan fuel di lintasan sebelum stint berakhir.
               </p>
@@ -225,7 +225,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({
         <div className="grid grid-cols-3 gap-2 text-center">
           <div className="p-1.5 rounded-lg bg-[#0d121a]">
             <span className="text-[11px] text-slate-400 uppercase font-mono font-semibold block">
-              Durasi Stint
+              Stint Duration
             </span>
             <span className="text-xs sm:text-sm font-mono font-bold text-white block truncate">
               {calculated.isValid ? `${calculated.durationMinutes.toFixed(1)}m` : '—'}
@@ -237,19 +237,19 @@ export const PlanCard: React.FC<PlanCardProps> = ({
 
           <div className="p-1.5 rounded-lg bg-[#0d121a]">
             <span className="text-[11px] text-slate-400 uppercase font-mono font-semibold block">
-              Estimasi Lap
+              Est. Laps
             </span>
             <span className="text-xs sm:text-sm font-mono font-bold text-cyan-400 block truncate">
               {calculated.isValid ? `${calculated.laps.toFixed(2)}` : '—'}
             </span>
             <span className="text-[10px] sm:text-[11px] font-mono text-slate-400 block truncate">
-              lap / stint
+              laps / stint
             </span>
           </div>
 
           <div className="p-1.5 rounded-lg bg-[#0d121a]">
             <span className="text-[11px] text-slate-400 uppercase font-mono font-semibold block">
-              Kebutuhan Fuel
+              Fuel Needed
             </span>
             <span
               className={`text-xs sm:text-sm font-mono font-bold block truncate ${
@@ -259,7 +259,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({
               {calculated.isValid ? `${calculated.fuelNeededPerStint.toFixed(1)}L` : '—'}
             </span>
             <span className="text-[10px] sm:text-[11px] font-mono text-slate-400 block truncate">
-              liter / stint
+              L / stint
             </span>
           </div>
         </div>

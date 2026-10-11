@@ -21,12 +21,12 @@ type SortField = 'delta' | 'totalPits' | 'totalTime' | 'totalLaps' | 'totalFuel'
 type SortOrder = 'asc' | 'desc';
 
 const PLAN_BADGES: Record<string, { bg: string; text: string; border: string }> = {
-  A: { bg: 'bg-cyan-500/15', text: 'text-cyan-300', border: 'border-cyan-500/30' },
-  B: { bg: 'bg-emerald-500/15', text: 'text-emerald-300', border: 'border-emerald-500/30' },
-  C: { bg: 'bg-amber-500/15', text: 'text-amber-300', border: 'border-amber-500/30' },
-  D: { bg: 'bg-purple-500/15', text: 'text-purple-300', border: 'border-purple-500/30' },
-  E: { bg: 'bg-pink-500/15', text: 'text-pink-300', border: 'border-pink-500/30' },
-  F: { bg: 'bg-indigo-500/15', text: 'text-indigo-300', border: 'border-indigo-500/30' },
+  A: { bg: 'bg-slate-800', text: 'text-sky-300', border: 'border-slate-700' },
+  B: { bg: 'bg-slate-800', text: 'text-emerald-300', border: 'border-slate-700' },
+  C: { bg: 'bg-slate-800', text: 'text-amber-300', border: 'border-slate-700' },
+  D: { bg: 'bg-slate-800', text: 'text-slate-300', border: 'border-slate-700' },
+  E: { bg: 'bg-slate-800', text: 'text-slate-300', border: 'border-slate-700' },
+  F: { bg: 'bg-slate-800', text: 'text-slate-300', border: 'border-slate-700' },
 };
 
 export const CombinationTable: React.FC<CombinationTableProps> = ({
@@ -41,7 +41,6 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
   const [pageSize, setPageSize] = useState<number>(25);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  // Toggle sort order or field
   const handleSort = (field: SortField) => {
     if (sortField === field) {
       setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
@@ -51,15 +50,12 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
     }
   };
 
-  // Filtered and sorted data
   const filteredData = useMemo(() => {
     return combinations.filter((item) => {
-      // Plan filter
       if (filterPlan !== 'all') {
         if ((item.planCounts[filterPlan] ?? 0) <= 0) return false;
       }
 
-      // Text search
       if (searchTerm.trim() !== '') {
         const query = searchTerm.toLowerCase();
         const matchesSummary = item.activePlansSummary.toLowerCase().includes(query);
@@ -98,7 +94,6 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
     return list;
   }, [filteredData, sortField, sortOrder]);
 
-  // Pagination
   const totalPages = Math.max(1, Math.ceil(sortedData.length / pageSize));
   const paginatedData = useMemo(() => {
     const start = (currentPage - 1) * pageSize;
@@ -112,15 +107,15 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
   const enabledPlans = plans.filter((p) => p.enabled);
 
   return (
-    <div className="bg-race-panel border border-race-border rounded-2xl shadow-xl overflow-hidden flex flex-col">
+    <div className="bg-race-surface border border-race-border rounded-xl shadow-xl overflow-hidden flex flex-col">
       {/* Header & Filter Bar */}
-      <div className="p-4 sm:p-5 border-b border-race-border/80 bg-[#090d14]/70 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+      <div className="p-4 sm:p-5 border-b border-race-border bg-[#11161d] flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
             <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
               Pit Wall Strategy Matrix
             </h3>
-            <span className="px-2.5 py-0.5 text-xs font-mono font-bold rounded bg-slate-800 text-slate-300">
+            <span className="px-2.5 py-0.5 text-xs font-mono font-bold rounded bg-slate-800 text-slate-300 border border-slate-700">
               {filteredData.length} of {combinations.length} strategies
             </span>
           </div>
@@ -131,7 +126,6 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
 
         {/* Filters & Export */}
         <div className="flex flex-wrap items-center gap-2.5">
-          {/* Search box */}
           <div className="relative">
             <MagnifyingGlass
               size={14}
@@ -139,20 +133,21 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
             />
             <input
               type="text"
+              aria-label="Search plan, pits, or duration"
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
               placeholder="Search plan, pits, duration..."
-              className="bg-[#0c1018] border border-race-border focus:border-cyan-500 rounded-xl pl-8 pr-3 py-1.5 text-xs font-mono text-white placeholder-slate-500 w-44 sm:w-56 transition-colors outline-none"
+              className="bg-[#0d1117] border border-race-border focus:border-slate-400 rounded-lg pl-8 pr-3 py-1.5 text-xs font-mono text-white placeholder-slate-500 w-44 sm:w-56 transition-colors outline-none"
             />
           </div>
 
-          {/* Filter by Plan */}
-          <div className="flex items-center gap-1 bg-[#0c1018] border border-race-border rounded-xl px-2 py-1">
+          <div className="flex items-center gap-1 bg-[#0d1117] border border-race-border rounded-lg px-2 py-1">
             <Funnel size={13} className="text-slate-400" />
             <select
+              aria-label="Filter by Plan"
               value={filterPlan}
               onChange={(e) => {
                 setFilterPlan(e.target.value);
@@ -169,11 +164,10 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
             </select>
           </div>
 
-          {/* Export CSV Button */}
           <button
             onClick={handleExport}
             disabled={sortedData.length === 0}
-            className="px-3.5 py-1.5 text-xs font-medium rounded-xl bg-cyan-500/15 text-cyan-300 hover:bg-cyan-500/25 border border-cyan-500/30 flex items-center gap-1.5 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+            className="px-3.5 py-1.5 text-xs font-medium rounded-lg bg-slate-800 text-slate-200 hover:bg-slate-700 hover:text-white border border-slate-700 flex items-center gap-1.5 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
             title="Unduh tabel perbandingan strategi dalam format CSV"
           >
             <DownloadSimple size={14} weight="bold" />
@@ -182,70 +176,94 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
         </div>
       </div>
 
-      {/* Table Container */}
       <div className="overflow-x-auto">
         <table className="w-full text-left text-xs border-collapse">
           <thead>
-            <tr className="border-b border-race-border/80 bg-[#080b10] text-slate-300 font-mono uppercase tracking-wider text-xs font-bold">
-              <th className="py-3 px-3.5 w-12 text-center">#</th>
-              <th className="py-3 px-3.5 min-w-[200px]">Stint Breakdown</th>
-              <th className="py-3 px-3 w-16 text-center">Total Stints</th>
+            <tr className="border-b border-race-border bg-[#0d1117] text-slate-300 font-mono uppercase tracking-wider text-xs font-bold">
+              <th scope="col" className="py-3 px-3.5 w-12 text-center">#</th>
+              <th scope="col" className="py-3 px-3.5 min-w-[200px]">Stint Breakdown</th>
+              <th scope="col" className="py-3 px-3 w-16 text-center">Total Stints</th>
               <th
-                onClick={() => handleSort('totalPits')}
-                className="py-3 px-3 text-center cursor-pointer hover:text-white transition-colors"
+                scope="col"
+                aria-sort={sortField === 'totalPits' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'}
+                className="py-3 px-3 text-center"
               >
-                <div className="flex items-center justify-center gap-1">
+                <button
+                  type="button"
+                  onClick={() => handleSort('totalPits')}
+                  className="w-full flex items-center justify-center gap-1 font-mono uppercase tracking-wider text-xs font-bold text-slate-300 hover:text-white transition-colors focus:outline-none focus:text-sky-300"
+                >
                   <span>Pit Stops</span>
                   {sortField === 'totalPits' && (
                     sortOrder === 'asc' ? <CaretUp size={12} /> : <CaretDown size={12} />
                   )}
-                </div>
+                </button>
               </th>
               <th
-                onClick={() => handleSort('totalTime')}
-                className="py-3 px-3.5 cursor-pointer hover:text-white transition-colors"
+                scope="col"
+                aria-sort={sortField === 'totalTime' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'}
+                className="py-3 px-3.5"
               >
-                <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={() => handleSort('totalTime')}
+                  className="flex items-center gap-1 font-mono uppercase tracking-wider text-xs font-bold text-slate-300 hover:text-white transition-colors focus:outline-none focus:text-sky-300"
+                >
                   <span>Race Duration</span>
                   {sortField === 'totalTime' && (
                     sortOrder === 'asc' ? <CaretUp size={12} /> : <CaretDown size={12} />
                   )}
-                </div>
+                </button>
               </th>
               <th
-                onClick={() => handleSort('delta')}
-                className="py-3 px-3.5 cursor-pointer hover:text-white transition-colors"
+                scope="col"
+                aria-sort={sortField === 'delta' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'}
+                className="py-3 px-3.5"
               >
-                <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={() => handleSort('delta')}
+                  className="flex items-center gap-1 font-mono uppercase tracking-wider text-xs font-bold text-slate-300 hover:text-white transition-colors focus:outline-none focus:text-sky-300"
+                >
                   <span>Delta to Target</span>
                   {sortField === 'delta' && (
                     sortOrder === 'asc' ? <CaretUp size={12} /> : <CaretDown size={12} />
                   )}
-                </div>
+                </button>
               </th>
               <th
-                onClick={() => handleSort('totalLaps')}
-                className="py-3 px-3 text-right cursor-pointer hover:text-white transition-colors"
+                scope="col"
+                aria-sort={sortField === 'totalLaps' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'}
+                className="py-3 px-3 text-right"
               >
-                <div className="flex items-center justify-end gap-1">
+                <button
+                  type="button"
+                  onClick={() => handleSort('totalLaps')}
+                  className="w-full flex items-center justify-end gap-1 font-mono uppercase tracking-wider text-xs font-bold text-slate-300 hover:text-white transition-colors focus:outline-none focus:text-sky-300"
+                >
                   <span>Est. Total Laps</span>
                   {sortField === 'totalLaps' && (
                     sortOrder === 'asc' ? <CaretUp size={12} /> : <CaretDown size={12} />
                   )}
-                </div>
+                </button>
               </th>
               <th
-                onClick={() => handleSort('totalFuel')}
-                className="py-3 px-3.5 text-right cursor-pointer hover:text-white transition-colors"
+                scope="col"
+                aria-sort={sortField === 'totalFuel' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'}
+                className="py-3 px-3.5 text-right"
               >
-                <div className="flex items-center justify-end gap-1">
+                <button
+                  type="button"
+                  onClick={() => handleSort('totalFuel')}
+                  className="w-full flex items-center justify-end gap-1 font-mono uppercase tracking-wider text-xs font-bold text-slate-300 hover:text-white transition-colors focus:outline-none focus:text-sky-300"
+                >
                   <span>Est. Total Fuel</span>
                   {sortField === 'totalFuel' && (
                     sortOrder === 'asc' ? <CaretUp size={12} /> : <CaretDown size={12} />
                   )}
-                </div>
+                </button>
               </th>
-              <th className="py-3 px-3 w-16 text-center">Timeline</th>
+              <th scope="col" className="py-3 px-3 w-16 text-center">Timeline</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-race-border/40 font-mono">
@@ -258,23 +276,30 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
                 return (
                   <tr
                     key={item.id}
+                    tabIndex={0}
+                    role="button"
+                    aria-label={`Strategy rank ${rank}: ${item.activePlansSummary}, duration ${formatRaceTime(item.totalTimeMinutes)}`}
                     onClick={() => onSelectCombination(item)}
-                    className={`hover:bg-cyan-500/[0.04] transition-colors cursor-pointer group ${
-                      isOptimal ? 'bg-cyan-950/20' : ''
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        onSelectCombination(item);
+                      }
+                    }}
+                    className={`hover:bg-slate-800/40 focus:bg-slate-800/60 focus:outline-none focus:ring-1 focus:ring-slate-500/50 transition-colors cursor-pointer group ${
+                      isOptimal ? 'bg-sky-950/20' : ''
                     }`}
                   >
-                    {/* Rank */}
-                    <td className="py-3 px-3.5 text-center text-slate-400 group-hover:text-cyan-400">
+                    <td className="py-3 px-3.5 text-center text-slate-400 group-hover:text-slate-200">
                       {isOptimal ? (
-                        <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/40 inline-flex items-center justify-center text-[10px] font-bold">
-                          ★
+                        <span className="px-1.5 py-0.5 rounded text-[10px] font-bold font-mono bg-slate-800 text-sky-400 border border-slate-700">
+                          #1
                         </span>
                       ) : (
                         rank
                       )}
                     </td>
 
-                    {/* Stint Distribution Badges */}
                     <td className="py-3 px-3.5">
                       <div className="flex flex-wrap items-center gap-1.5">
                         {Object.entries(item.planCounts).map(([id, count]) => {
@@ -292,20 +317,17 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
                       </div>
                     </td>
 
-                    {/* Total Stints */}
                     <td className="py-3 px-3 text-center font-bold text-slate-200">
                       {item.totalStints}
                     </td>
 
-                    {/* Pits Breakdown */}
                     <td className="py-3 px-3 text-center">
-                      <div className="font-bold text-cyan-300">{item.totalPits}</div>
+                      <div className="font-bold text-white">{item.totalPits}</div>
                       <div className="text-[10px] text-slate-400">
                         {item.normalPits} Norm / {item.longPits} Long
                       </div>
                     </td>
 
-                    {/* Total Duration */}
                     <td className="py-3 px-3.5">
                       <div className="font-bold text-white">
                         {formatRaceTime(item.totalTimeMinutes)}
@@ -315,31 +337,28 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
                       </div>
                     </td>
 
-                    {/* Delta */}
                     <td className="py-3 px-3.5">
                       <span className={`font-semibold ${delta.colorClass}`}>
                         {delta.text}
                       </span>
                     </td>
 
-                    {/* Laps */}
                     <td className="py-3 px-3 text-right text-slate-200 font-bold">
                       {item.totalLaps.toFixed(1)}
                     </td>
 
-                    {/* Fuel */}
-                    <td className="py-3 px-3.5 text-right font-bold text-emerald-400">
+                    <td className="py-3 px-3.5 text-right font-bold text-slate-200">
                       {item.totalFuelLiters.toFixed(1)} L
                     </td>
 
-                    {/* Action */}
                     <td className="py-3 px-3 text-center">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           onSelectCombination(item);
                         }}
-                        className="p-1.5 rounded-lg text-slate-400 hover:text-cyan-300 hover:bg-cyan-500/10 transition-colors"
+                        aria-label={`Buka visualisasi alur timeline stint rank ${rank}`}
+                        className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors focus:outline-none focus:ring-1 focus:ring-slate-500/50"
                         title="Buka visualisasi alur timeline stint"
                       >
                         <Eye size={16} />
@@ -360,16 +379,17 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
       </div>
 
       {/* Pagination Footer */}
-      <div className="p-3.5 sm:p-4 border-t border-race-border/80 bg-[#090d14]/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
+      <div className="p-3.5 sm:p-4 border-t border-race-border bg-[#11161d] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
         <div className="flex items-center gap-2 text-slate-400">
           <span>Show:</span>
           <select
+            aria-label="Strategies per page"
             value={pageSize}
             onChange={(e) => {
               setPageSize(Number(e.target.value));
               setCurrentPage(1);
             }}
-            className="bg-[#0c1018] border border-race-border text-slate-200 rounded px-2 py-1 outline-none cursor-pointer"
+            className="bg-[#0d1117] border border-race-border text-slate-200 rounded px-2 py-1 outline-none cursor-pointer"
           >
             <option value={10}>10 per page</option>
             <option value={25}>25 per page</option>
@@ -385,7 +405,7 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
           <button
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="px-3 py-1 rounded bg-[#0c1018] border border-race-border text-slate-300 hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="px-3 py-1 rounded bg-[#0d1117] border border-race-border text-slate-300 hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             Previous
           </button>
@@ -395,7 +415,7 @@ export const CombinationTable: React.FC<CombinationTableProps> = ({
           <button
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             disabled={currentPage >= totalPages}
-            className="px-3 py-1 rounded bg-[#0c1018] border border-race-border text-slate-300 hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="px-3 py-1 rounded bg-[#0d1117] border border-race-border text-slate-300 hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             Next
           </button>

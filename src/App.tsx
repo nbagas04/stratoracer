@@ -73,12 +73,9 @@ export function App() {
 
   return (
     <div className="min-h-screen bg-[#080b0f] text-slate-100 flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200">
-      {/* Top Telemetry Header */}
       <Header />
 
-      {/* Main Content Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-7">
-        {/* Section 1: Global Parameters */}
         <section>
           <GlobalSettingsCard
             settings={globalSettings}
@@ -92,19 +89,18 @@ export function App() {
           />
         </section>
 
-        {/* Section 2: Stint Plans (A through F) */}
         <section className="space-y-3">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-                Stint Strategy Matrix (Plan A – F)
+                Stint Strategy Matrix (Plan A to F)
               </h2>
               <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
                 Pilih dan sesuaikan profil stint yang ingin disimulasikan. Mode Fuel-based mengalkulasi batas stint dari kapasitas tangki, sedangkan Mode Time-based menghitung kebutuhan bahan bakar untuk durasi target.
               </p>
             </div>
             <div className="text-xs sm:text-sm font-mono text-slate-400 flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
               <span>
                 {plans.filter((p) => p.enabled).length} of {plans.length} Plans Active
               </span>
@@ -123,7 +119,6 @@ export function App() {
           </div>
         </section>
 
-        {/* Section 3: Summary Insight Metrics */}
         <section className="space-y-3">
           <div className="flex items-center justify-between">
             <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
@@ -144,7 +139,6 @@ export function App() {
           />
         </section>
 
-        {/* Section 4: Interactive Strategy Combinations Table */}
         <section className="space-y-3">
           <CombinationTable
             combinations={combinations}
@@ -154,7 +148,6 @@ export function App() {
         </section>
       </main>
 
-      {/* Footer */}
       <footer className="border-t border-race-border bg-[#07090d] px-4 sm:px-6 py-5 text-xs font-mono text-slate-400">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <div>
@@ -166,7 +159,6 @@ export function App() {
         </div>
       </footer>
 
-      {/* Sequence Timeline Modal */}
       {selectedCombination && (
         <StintTimelineModal
           combination={selectedCombination}

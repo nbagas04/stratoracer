@@ -8,14 +8,14 @@
   }
   
   body {
-    background-color: #080b0f;
-    color: #f1f5f9;
+    background-color: #0d1117;
+    color: #f0f6fc;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
   h1, h2, h3, h4 {
-    letter-spacing: -0.02em;
-    color: #f8fafc;
+    letter-spacing: -0.015em;
+    color: #f0f6fc;
   }
 
   /* Custom telemetry scrollbar */
@@ -24,23 +24,17 @@
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #0d121a;
+    background: #0d1117;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1e2838;
+    background: #30363d;
     border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #2a374d;
+    background: #484f58;
   }
 }
 
 .tabular-nums {
   font-variant-numeric: tabular-nums;
-}
-
-/* Subtle telemetry grid background */
-.bg-telemetry-grid {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 24px 24px;
 }

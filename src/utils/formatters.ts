@@ -99,10 +99,10 @@ export function formatDeltaTime(deltaMinutes: number, deltaPercent: number): {
   const text = `${sign}${mStr}m ${sStr}s (${sign}${pct}%)`;
 
   let colorClass = 'text-emerald-400';
-  if (Math.abs(deltaPercent) > 3) {
-    colorClass = 'text-amber-400';
-  } else if (Math.abs(deltaPercent) > 4.5) {
+  if (Math.abs(deltaPercent) > 4.5) {
     colorClass = 'text-rose-400';
+  } else if (Math.abs(deltaPercent) > 3) {
+    colorClass = 'text-amber-400';
   }
 
   return {

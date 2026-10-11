@@ -24,8 +24,7 @@ export const SummaryCards: React.FC<SummaryCardsProps> = ({
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {/* 1. Combinations Counter */}
-      <div className="bg-race-panel border border-race-border rounded-2xl p-5 shadow-md flex flex-col justify-between min-w-0">
+      <div className="bg-race-surface border border-race-border rounded-xl p-4 sm:p-5 flex flex-col justify-between min-w-0">
         <div>
           <h3 className="text-sm sm:text-base font-bold text-slate-300">Valid Combinations</h3>
         </div>
@@ -42,10 +41,9 @@ export const SummaryCards: React.FC<SummaryCardsProps> = ({
         </div>
       </div>
 
-      {/* 2. Recommended Optimal Strategy */}
-      <div className="bg-gradient-to-br from-cyan-950/30 via-race-panel to-race-panel border border-cyan-500/30 rounded-2xl p-5 shadow-md flex flex-col justify-between relative overflow-hidden group min-w-0">
+      <div className="bg-race-surface border border-race-border rounded-xl p-4 sm:p-5 flex flex-col justify-between min-w-0">
         <div>
-          <h3 className="text-sm sm:text-base font-bold text-cyan-300">
+          <h3 className="text-sm sm:text-base font-bold text-slate-200">
             Optimal Strategy
           </h3>
         </div>
@@ -68,9 +66,9 @@ export const SummaryCards: React.FC<SummaryCardsProps> = ({
                 {onSelectRecommendation && (
                   <button
                     onClick={onSelectRecommendation}
-                    className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2 shrink-0 font-medium cursor-pointer"
+                    className="text-sky-400 hover:text-sky-300 underline underline-offset-2 shrink-0 font-medium cursor-pointer"
                   >
-                    Open Timeline →
+                    Open Timeline
                   </button>
                 )}
               </div>
@@ -83,8 +81,7 @@ export const SummaryCards: React.FC<SummaryCardsProps> = ({
         </div>
       </div>
 
-      {/* 3. Target Race Duration & Tolerance */}
-      <div className="bg-race-panel border border-race-border rounded-2xl p-5 shadow-md flex flex-col justify-between min-w-0">
+      <div className="bg-race-surface border border-race-border rounded-xl p-4 sm:p-5 flex flex-col justify-between min-w-0">
         <div>
           <h3 className="text-sm sm:text-base font-bold text-slate-300">Target & Tolerance Window</h3>
         </div>
@@ -94,15 +91,14 @@ export const SummaryCards: React.FC<SummaryCardsProps> = ({
           </div>
           <div className="text-xs sm:text-sm font-mono text-slate-400 mt-1.5 flex flex-wrap items-center justify-between gap-1">
             <span className="text-slate-400">Window (±{settings.allowancePercent}%):</span>
-            <span className="text-cyan-300 font-semibold">
-              {formatRaceTime(minTime, false)} – {formatRaceTime(maxTime, false)}
+            <span className="text-slate-200 font-semibold">
+              {formatRaceTime(minTime, false)} to {formatRaceTime(maxTime, false)}
             </span>
           </div>
         </div>
       </div>
 
-      {/* 4. Best Strategy Laps & Fuel */}
-      <div className="bg-race-panel border border-race-border rounded-2xl p-5 shadow-md flex flex-col justify-between min-w-0">
+      <div className="bg-race-surface border border-race-border rounded-xl p-4 sm:p-5 flex flex-col justify-between min-w-0">
         <div>
           <h3 className="text-sm sm:text-base font-bold text-slate-300">Projected Laps & Fuel</h3>
         </div>
@@ -110,11 +106,11 @@ export const SummaryCards: React.FC<SummaryCardsProps> = ({
           {best ? (
             <div>
               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <span className="text-xl sm:text-2xl font-mono font-bold text-emerald-400">
+                <span className="text-xl sm:text-2xl font-mono font-bold text-white">
                   {best.totalLaps.toFixed(1)} <span className="text-xs sm:text-sm font-normal text-slate-400">Laps</span>
                 </span>
-                <span className="text-sm sm:text-base font-mono text-cyan-300 font-bold">
-                  {best.totalFuelLiters.toFixed(0)} <span className="text-xs text-slate-400 font-normal">Liters</span>
+                <span className="text-xl sm:text-2xl font-mono font-bold text-slate-200">
+                  {best.totalFuelLiters.toFixed(0)} <span className="text-xs sm:text-sm font-normal text-slate-400">Liters</span>
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-1.5 truncate">

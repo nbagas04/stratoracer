@@ -33,12 +33,8 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
   };
 
   return (
-    <div className="bg-race-panel/90 border border-race-border rounded-2xl p-5 sm:p-6 shadow-xl relative overflow-hidden backdrop-blur-sm">
-      {/* Subtle telemetry accent line */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
-
-      {/* Card Header */}
-      <div className="pb-4 mb-4 border-b border-race-border/60">
+    <div className="bg-race-surface border border-race-border rounded-xl p-5 sm:p-6">
+      <div className="pb-4 mb-4 border-b border-race-border">
         <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
           Global Race Parameters
         </h2>
@@ -47,9 +43,8 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
         </p>
       </div>
 
-      {/* Quick Race Presets */}
       <div className="mb-6 space-y-2">
-        <div className="text-xs sm:text-sm font-bold text-slate-200">
+        <div className="text-xs sm:text-sm font-semibold text-slate-300">
           Race Presets
         </div>
 
@@ -61,10 +56,10 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
                 key={preset.name}
                 type="button"
                 onClick={() => onSelectPreset(preset)}
-                className={`px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-all flex items-center gap-1.5 ${
+                className={`px-3 py-1.5 text-xs font-mono rounded transition-colors ${
                   isActive
-                    ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/60 shadow-[0_0_12px_rgba(6,182,212,0.25)] font-semibold'
-                    : 'text-slate-400 hover:text-slate-200 bg-[#0d131c] hover:bg-slate-800/80 border border-race-border/80'
+                    ? 'bg-slate-200 text-slate-900 font-semibold'
+                    : 'text-slate-400 hover:text-slate-200 bg-race-panel hover:bg-slate-800 border border-race-border'
                 }`}
                 title={`${preset.name} (${preset.targetMinutes}m)`}
               >
@@ -76,7 +71,7 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
           <button
             type="button"
             onClick={onResetToDefaults}
-            className="px-2.5 py-1.5 text-xs font-medium text-slate-500 hover:text-rose-400/90 bg-transparent hover:bg-slate-800/30 border border-slate-800/60 hover:border-rose-900/40 rounded-lg flex items-center gap-1 transition-all opacity-60 hover:opacity-100 cursor-pointer"
+            className="px-2.5 py-1.5 text-xs font-mono text-slate-400 hover:text-rose-300 bg-race-panel hover:bg-slate-800 border border-race-border hover:border-rose-900/60 rounded flex items-center gap-1.5 transition-colors cursor-pointer"
             title="Kembalikan semua parameter ke nilai default"
           >
             <ArrowCounterClockwise size={12} />
@@ -85,18 +80,15 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
         </div>
       </div>
 
-      {/* 2-Column Parameter Grid (Saran A) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 pt-5 border-t border-race-border/50">
-        {/* Column 1: Race Timing & Tolerance */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 pt-5 border-t border-race-border">
         <div className="space-y-4">
-          <div className="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-300 pb-1.5 border-b border-race-border/40">
+          <div className="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-400 pb-1.5 border-b border-race-border">
             Race Timing & Tolerance
           </div>
 
-          {/* 1. Target Race Duration */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="text-xs sm:text-sm font-semibold text-slate-200">
+              <label htmlFor="target-race-duration" className="text-xs sm:text-sm font-medium text-slate-300">
                 Target Race Duration
               </label>
               <span className="font-mono text-slate-400 text-xs sm:text-sm">
@@ -105,14 +97,15 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
             </div>
             <div className="relative">
               <input
+                id="target-race-duration"
                 type="text"
                 inputMode="decimal"
                 value={settings.targetTotalTimeMinutes || ''}
                 onChange={(e) => handleNumberChange('targetTotalTimeMinutes', e.target.value)}
-                className="w-full bg-[#0a0e16] border border-race-border focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/40 rounded-xl pl-3.5 pr-16 py-2.5 text-sm font-mono text-white placeholder-slate-600 transition-colors"
+                className="w-full bg-[#0d1117] border border-race-border focus:border-slate-400 focus:outline-none rounded-lg pl-3 pr-14 py-2 text-sm font-mono text-white placeholder-slate-500 transition-colors"
                 placeholder="480"
               />
-              <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                 <span className="text-xs sm:text-sm font-mono text-slate-400">
                   min
                 </span>
@@ -123,10 +116,9 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
             </p>
           </div>
 
-          {/* 2. Allowance % + Valid Window */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="text-xs sm:text-sm font-semibold text-slate-200">
+              <label htmlFor="allowance-percent" className="text-xs sm:text-sm font-medium text-slate-300">
                 Allowance Window (± %)
               </label>
               <span className="font-mono text-slate-400 text-xs sm:text-sm">
@@ -136,24 +128,24 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
               <div className="relative flex-1">
                 <input
+                  id="allowance-percent"
                   type="text"
                   inputMode="decimal"
                   value={settings.allowancePercent || ''}
                   onChange={(e) => handleNumberChange('allowancePercent', e.target.value)}
-                  className="w-full bg-[#0a0e16] border border-race-border focus:border-amber-500 focus:ring-1 focus:ring-amber-500/40 rounded-xl pl-3.5 pr-8 py-2.5 text-sm font-mono text-white placeholder-slate-600 transition-colors"
+                  className="w-full bg-[#0d1117] border border-race-border focus:border-slate-400 focus:outline-none rounded-lg pl-3 pr-8 py-2 text-sm font-mono text-white placeholder-slate-500 transition-colors"
                   placeholder="5"
                 />
-                <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
+                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                   <span className="text-xs sm:text-sm font-mono text-slate-400">
                     %
                   </span>
                 </div>
               </div>
-              {/* Valid Duration without background */}
               <div className="text-xs font-mono text-slate-400 shrink-0 flex items-center justify-center gap-1.5 py-1">
                 <span>Valid Range:</span>
                 <span className="text-slate-300">{formatRaceTime(minTime)}</span>
-                <span className="text-slate-500">➔</span>
+                <span className="text-slate-400 font-semibold">to</span>
                 <span className="text-slate-300">{formatRaceTime(maxTime)}</span>
               </div>
             </div>
@@ -162,42 +154,40 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
             </p>
           </div>
 
-          {/* 3. Max Repetitions (Max Reps) */}
           <div className="space-y-1.5">
-            <label className="text-xs sm:text-sm font-semibold text-slate-200 block">
+            <label htmlFor="max-reps" className="text-xs sm:text-sm font-medium text-slate-300 block">
               Max Repetitions per Plan
             </label>
             <div className="relative">
               <input
+                id="max-reps"
                 type="text"
                 inputMode="numeric"
                 value={settings.maxReps}
                 onChange={(e) => handleNumberChange('maxReps', e.target.value)}
-                className="w-full bg-[#0a0e16] border border-race-border focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/40 rounded-xl pl-3.5 pr-14 py-2.5 text-sm font-mono text-white placeholder-slate-600 transition-colors"
+                className="w-full bg-[#0d1117] border border-race-border focus:border-slate-400 focus:outline-none rounded-lg pl-3 pr-14 py-2 text-sm font-mono text-white placeholder-slate-500 transition-colors"
                 placeholder="8"
               />
-              <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                 <span className="text-xs sm:text-sm font-mono text-slate-400">
                   stints
                 </span>
               </div>
             </div>
             <p className="text-[11px] text-slate-400">
-              Batas maksimum perulangan stint untuk masing-masing profil plan (Plan A–F)
+              Batas maksimum perulangan stint untuk masing-masing profil plan (Plan A to F)
             </p>
           </div>
         </div>
 
-        {/* Column 2: Pit Lane Rules */}
         <div className="space-y-4">
-          <div className="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-300 pb-1.5 border-b border-race-border/40">
+          <div className="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-400 pb-1.5 border-b border-race-border">
             Pit Lane Regulations
           </div>
 
-          {/* 4. Normal Pit Duration */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="text-xs sm:text-sm font-semibold text-slate-200">
+              <label htmlFor="normal-pit-duration" className="text-xs sm:text-sm font-medium text-slate-300">
                 Normal Pit Duration
               </label>
               <span className="font-mono text-slate-400 text-xs sm:text-sm">
@@ -206,14 +196,15 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
             </div>
             <div className="relative">
               <input
+                id="normal-pit-duration"
                 type="text"
                 inputMode="decimal"
                 value={settings.normalPitDurationSeconds || ''}
                 onChange={(e) => handleNumberChange('normalPitDurationSeconds', e.target.value)}
-                className="w-full bg-[#0a0e16] border border-race-border focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/40 rounded-xl pl-3.5 pr-16 py-2.5 text-sm font-mono text-white placeholder-slate-600 transition-colors"
+                className="w-full bg-[#0d1117] border border-race-border focus:border-slate-400 focus:outline-none rounded-lg pl-3 pr-14 py-2 text-sm font-mono text-white placeholder-slate-500 transition-colors"
                 placeholder="51.6"
               />
-              <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                 <span className="text-xs sm:text-sm font-mono text-slate-400">
                   sec
                 </span>
@@ -224,10 +215,9 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
             </p>
           </div>
 
-          {/* 5. Long Pit Duration */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="text-xs sm:text-sm font-semibold text-slate-200">
+              <label htmlFor="long-pit-duration" className="text-xs sm:text-sm font-medium text-slate-300">
                 Long Pit Duration
               </label>
               <span className="font-mono text-slate-400 text-xs sm:text-sm">
@@ -236,14 +226,15 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
             </div>
             <div className="relative">
               <input
+                id="long-pit-duration"
                 type="text"
                 inputMode="decimal"
                 value={settings.longPitDurationSeconds || ''}
                 onChange={(e) => handleNumberChange('longPitDurationSeconds', e.target.value)}
-                className="w-full bg-[#0a0e16] border border-blue-500 focus:border-blue-400 focus:ring-1 focus:ring-blue-500/40 rounded-xl pl-3.5 pr-16 py-2.5 text-sm font-mono text-white placeholder-slate-600 transition-colors"
+                className="w-full bg-[#0d1117] border border-race-border focus:border-slate-400 focus:outline-none rounded-lg pl-3 pr-14 py-2 text-sm font-mono text-white placeholder-slate-500 transition-colors"
                 placeholder="210"
               />
-              <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                 <span className="text-xs sm:text-sm font-mono text-slate-400">
                   sec
                 </span>
@@ -254,21 +245,21 @@ export const GlobalSettingsCard: React.FC<GlobalSettingsCardProps> = ({
             </p>
           </div>
 
-          {/* 6. Long Pit Count */}
           <div className="space-y-1.5">
-            <label className="text-xs sm:text-sm font-semibold text-slate-200 block">
+            <label htmlFor="long-pit-count" className="text-xs sm:text-sm font-medium text-slate-300 block">
               Long Pit Count
             </label>
             <div className="relative">
               <input
+                id="long-pit-count"
                 type="text"
                 inputMode="numeric"
                 value={settings.longPitCount}
                 onChange={(e) => handleNumberChange('longPitCount', e.target.value)}
-                className="w-full bg-[#0a0e16] border border-race-border focus:border-purple-500 focus:ring-1 focus:ring-purple-500/40 rounded-xl pl-3.5 pr-14 py-2.5 text-sm font-mono text-white placeholder-slate-600 transition-colors"
+                className="w-full bg-[#0d1117] border border-race-border focus:border-slate-400 focus:outline-none rounded-lg pl-3 pr-14 py-2 text-sm font-mono text-white placeholder-slate-500 transition-colors"
                 placeholder="3"
               />
-              <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                 <span className="text-xs sm:text-sm font-mono text-slate-400">
                   stops
                 </span>
